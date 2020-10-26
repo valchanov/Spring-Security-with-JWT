@@ -4,6 +4,7 @@ import com.example.security.role.RoleModel;
 import com.example.security.user.UserModel;
 import com.example.security.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -54,7 +55,7 @@ public class AuthController {
 
         userRepository.save(userModel);
 
-        return ResponseEntity.ok("User registered successfully!");
+        return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully!");
     }
 
     private UserModel toModel(RegisterRequest registerRequest) {

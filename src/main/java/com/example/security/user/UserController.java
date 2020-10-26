@@ -28,12 +28,4 @@ public class UserController {
 
         return userService.loadUserByUsername(email);
     }
-
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping("/users")
-    ResponseEntity<String> getAllUsers() {
-
-        return ResponseEntity.ok()
-                             .body("Hello there!");
-    }
 }
