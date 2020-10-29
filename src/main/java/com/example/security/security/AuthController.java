@@ -1,6 +1,7 @@
 package com.example.security.security;
 
 import com.example.security.role.RoleModel;
+import com.example.security.role.RoleRepository;
 import com.example.security.user.UserModel;
 import com.example.security.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,8 +14,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import static com.example.security.role.UserRole.ROLE_USER;
-
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
@@ -22,6 +21,7 @@ import static com.example.security.role.UserRole.ROLE_USER;
 public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
 
@@ -50,21 +50,30 @@ public class AuthController {
                                  .body("Error: Email is already in use!");
         }
 
-        registerRequest.setRole(ROLE_USER);
-        UserModel userModel = toModel(registerRequest);
+        //set ROLE_USER
+        registerRequest.setRole_id(2L);
+        UserModel userModel = toEntity(registerRequest);
 
         userRepository.save(userModel);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully!");
+        return ResponseEntity.status(HttpStatus.CREATED)
+                             .body("User registered successfully!");
     }
 
-    private UserModel toModel(RegisterRequest registerRequest) {
+    private UserModel toEntity(RegisterRequest request) {
         UserModel userModel = new UserModel();
-        userModel.setName(registerRequest.getName());
-        userModel.setEmail(registerRequest.getEmail());
-        userModel.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
-        userModel.setRole(new RoleModel(registerRequest.getRole()));
+        userModel.setName(request.getName());
+        userModel.setEmail(request.getEmail());
+        userModel.setPassword(passwordEncoder.encode(request.getPassword()));
+        userModel.setRole(getRoleModel(request));
 
         return userModel;
+    }
+
+    private RoleModel getRoleModel(RegisterRequest registerRequest) {
+        Long roleId = registerRequest.getRole_id();
+
+        return roleRepository.findById(roleId)
+                             .orElseThrow(() -> new RuntimeException("Role not found"));
     }
 }

@@ -24,7 +24,7 @@ public class JwtUtils {
 
     private final int jwtExpirationMs;
 
-    public JwtUtils(@Value("${token.jwtExpiration}") int jwtExpirationMs) {
+    public JwtUtils(@Value("{${token.jwtExpiration}}") int jwtExpirationMs) {
         this.jwtExpirationMs = jwtExpirationMs;
     }
 
