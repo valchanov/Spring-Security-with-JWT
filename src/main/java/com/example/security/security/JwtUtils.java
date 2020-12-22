@@ -22,9 +22,9 @@ public class JwtUtils {
     // instead.
     private final SecretKey secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 
-    private final int jwtExpirationMs;
+    private final long jwtExpirationMs;
 
-    public JwtUtils(@Value("{${token.jwtExpiration}}") int jwtExpirationMs) {
+    public JwtUtils(@Value("${token.jwtExpiration}") long jwtExpirationMs) {
         this.jwtExpirationMs = jwtExpirationMs;
     }
 
