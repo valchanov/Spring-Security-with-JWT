@@ -1,6 +1,6 @@
 package com.example.security.user;
 
-import com.example.security.base.BaseEntity;
+import com.example.security.base.BaseEntityAudit;
 import com.example.security.role.RoleModel;
 import com.sun.istack.NotNull;
 import lombok.Data;
@@ -12,14 +12,14 @@ import javax.persistence.*;
 @Data
 @Table(name = "users")
 @EqualsAndHashCode(callSuper = true)
-public class UserModel extends BaseEntity {
+public class UserModel extends BaseEntityAudit {
     @NotNull
     private String name;
 
-    @NotNull
+   // @NotNull
     private String email;
 
-    @NotNull
+    //@NotNull
     private String password;
 
     @ManyToOne(cascade= CascadeType.ALL)

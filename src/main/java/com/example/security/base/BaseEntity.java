@@ -3,11 +3,10 @@ package com.example.security.base;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Data
 @MappedSuperclass
-public class BaseEntity implements Serializable {
+public class BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column

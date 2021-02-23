@@ -1,6 +1,6 @@
 package com.example.security.role;
 
-import com.example.security.base.BaseEntity;
+import com.example.security.base.BaseEntityAudit;
 import com.sun.istack.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Entity
 @Data
 @Table(name = "roles")
-public class RoleModel extends BaseEntity {
+public class RoleModel extends BaseEntityAudit {
     @NotNull
     @Enumerated(EnumType.STRING)
     private UserRole name;
